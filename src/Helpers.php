@@ -8,7 +8,7 @@ use Axe\Exception\MissingTemplateException;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 
-if (!function_exists('__t')) {
+if (! function_exists('__t')) {
     /**
      * The root template directory, this can be over written in the child theme.
      *
@@ -20,7 +20,7 @@ if (!function_exists('__t')) {
     }
 }
 
-if (!function_exists('__p')) {
+if (! function_exists('__p')) {
     /**
      * Returns the Parent template path.
      *
@@ -32,7 +32,7 @@ if (!function_exists('__p')) {
     }
 }
 
-if (!function_exists('__a')) {
+if (! function_exists('__a')) {
     /**
      * Assets relative to the template directory.
      *
@@ -44,7 +44,7 @@ if (!function_exists('__a')) {
     }
 }
 
-if (!function_exists('__j')) {
+if (! function_exists('__j')) {
     /**
      * Echoes the Javascript path.
      */
@@ -54,7 +54,7 @@ if (!function_exists('__j')) {
     }
 }
 
-if (!function_exists('__i')) {
+if (! function_exists('__i')) {
     /**
      * Echoes the Images path.
      */
@@ -64,7 +64,7 @@ if (!function_exists('__i')) {
     }
 }
 
-if (!function_exists('__c')) {
+if (! function_exists('__c')) {
     /**
      * Echoes the CSS path.
      */
@@ -74,7 +74,7 @@ if (!function_exists('__c')) {
     }
 }
 
-if (!function_exists('__v')) {
+if (! function_exists('__v')) {
     /**
      * Echoes the Vendor path.
      */
@@ -84,7 +84,7 @@ if (!function_exists('__v')) {
     }
 }
 
-if (!function_exists('__lib')) {
+if (! function_exists('__lib')) {
     /**
      * Returns the Lib path.
      */
@@ -94,7 +94,7 @@ if (!function_exists('__lib')) {
     }
 }
 
-if (!function_exists('mix')) {
+if (! function_exists('mix')) {
     /**
      * @param $path
      *
@@ -106,8 +106,8 @@ if (!function_exists('mix')) {
         $pathWithSlash = '/'.ltrim($path, '/');
         $manifestFile = __m($useParent);
 
-//        No manifest file was found so return whatever was passed to mix().
-        if (!$manifestFile) {
+        //        No manifest file was found so return whatever was passed to mix().
+        if (! $manifestFile) {
             return __t($useParent).$pathWithOutSlash;
         }
 
@@ -123,12 +123,12 @@ if (!function_exists('mix')) {
         if (array_key_exists($pathWithSlash, $manifestArray)) {
             return __t($useParent).ltrim($manifestArray[$pathWithSlash], '/');
         }
-//        No file was found in the manifest, return whatever was passed to mix().
+        //        No file was found in the manifest, return whatever was passed to mix().
         return __t($useParent).$pathWithOutSlash;
     }
 }
 
-if (!function_exists('__video')) {
+if (! function_exists('__video')) {
     /**
      *  Echos the video path.
      */
@@ -139,7 +139,7 @@ if (!function_exists('__video')) {
 }
 
 
-if (!function_exists('underscore')) {
+if (! function_exists('underscore')) {
     /**
      * @param $string
      *
@@ -151,7 +151,7 @@ if (!function_exists('underscore')) {
     }
 }
 
-if (!function_exists('dash')) {
+if (! function_exists('dash')) {
     /**
      * @param $string
      *
@@ -163,7 +163,7 @@ if (!function_exists('dash')) {
     }
 }
 
-if (!function_exists('get_cat_hierarchy')) {
+if (! function_exists('get_cat_hierarchy')) {
     /**
      * @param $parent
      * @param $args
@@ -185,11 +185,11 @@ if (!function_exists('get_cat_hierarchy')) {
             }
         }
 
-        return (array) $ret;
+        return (array)$ret;
     }
 }
 
-if (!function_exists('get_acf_part')) {
+if (! function_exists('get_acf_part')) {
     /**
      * @param $slug
      * @param $name
@@ -201,21 +201,21 @@ if (!function_exists('get_acf_part')) {
      */
     function get_acf_part($slug, $name = null, $data = null, $block = null)
     {
-	    $include = get_template_part_acf( $slug, $name );
+        $include = get_template_part_acf($slug, $name);
 
-	    try {
-		    if ( $include ) {
-			    include( $include );
-		    } else {
-			    throw new MissingTemplateException( "<p>Missing Template: {$slug} {$name}</p>" );
-		    }
-	    } catch ( MissingTemplateException $e ) {
-		    echo $e->getMessage();
-	    }
+        try {
+            if ($include) {
+                include($include);
+            } else {
+                throw new MissingTemplateException("<p>Missing Template: {$slug} {$name}</p>");
+            }
+        } catch (MissingTemplateException $e) {
+            echo $e->getMessage();
+        }
     }
 }
 
-if (!function_exists('get_acf_block')) {
+if (! function_exists('get_acf_block')) {
     /**
      * @param $block
      * @param $data
@@ -226,7 +226,7 @@ if (!function_exists('get_acf_block')) {
      * get_acf_block($block)
      * get_acf_block(path: 'templates/blocks/', block: $block); // custom block path
      */
-    function get_acf_block(array $block, $data = null, $path = 'templates/blocks/',)
+    function get_acf_block(array $block, $data = null, $path = 'templates/blocks/')
     {
         $layout = $block['acf_fc_layout'] ?? '';
 
@@ -243,7 +243,14 @@ if (!function_exists('get_acf_block')) {
     }
 }
 
-if (!function_exists('get_template_part_acf')) {
+if (! function_exists('make_block_class')) {
+    function make_block_class($layout)
+    {
+        return "block-".$layout;
+    }
+}
+
+if (! function_exists('get_template_part_acf')) {
     /**
      * @param      $slug
      * @param  null  $name
@@ -256,7 +263,7 @@ if (!function_exists('get_template_part_acf')) {
     function get_template_part_acf($slug, $name = null)
     {
         $templates = [];
-        $name = (string) $name;
+        $name = (string)$name;
 
         if ($name == null) {
             $templates[] = "{$slug}.php";
@@ -265,8 +272,8 @@ if (!function_exists('get_template_part_acf')) {
         }
 
         $located = '';
-        foreach ((array) $templates as $template_name) {
-            if (!$template_name) {
+        foreach ((array)$templates as $template_name) {
+            if (! $template_name) {
                 continue;
             }
             if (template_directory($template_name)) {
@@ -278,7 +285,7 @@ if (!function_exists('get_template_part_acf')) {
     }
 }
 
-if (!function_exists('check_path')) {
+if (! function_exists('check_path')) {
     /**
      * @param $template_name
      *
@@ -294,7 +301,7 @@ if (!function_exists('check_path')) {
     }
 }
 
-if (!function_exists('template_directory')) {
+if (! function_exists('template_directory')) {
     /**
      * @param $template_name
      *
@@ -316,7 +323,7 @@ if (!function_exists('template_directory')) {
     }
 }
 
-if (!function_exists('__m')) {
+if (! function_exists('__m')) {
     /**
      * Returns the mix-manifest.json file
      *
@@ -345,7 +352,7 @@ if (!function_exists('__m')) {
     }
 }
 
-if (!function_exists('is_sub_page')) {
+if (! function_exists('is_sub_page')) {
     /**
      * @param $post
      *
@@ -357,7 +364,7 @@ if (!function_exists('is_sub_page')) {
     }
 }
 
-if (!function_exists('show_template')) {
+if (! function_exists('show_template')) {
     /**
      * Returns the local WordPress template path.
      *
@@ -373,7 +380,7 @@ if (!function_exists('show_template')) {
     }
 }
 
-if (!function_exists('show_woo_listing')) {
+if (! function_exists('show_woo_listing')) {
     /**
      * Returns the local WordPress template path.
      *
@@ -381,11 +388,11 @@ if (!function_exists('show_woo_listing')) {
      */
     function show_woo_listing()
     {
-        return class_exists('WooCommerce') and is_shop() and !is_product();
+        return class_exists('WooCommerce') and is_shop() and ! is_product();
     }
 }
 
-if (!function_exists('show_woo_category')) {
+if (! function_exists('show_woo_category')) {
     /**
      * Returns the local WordPress template path.
      *
@@ -393,11 +400,11 @@ if (!function_exists('show_woo_category')) {
      */
     function show_woo_category()
     {
-        return class_exists('WooCommerce') and is_product_category() and !is_product();
+        return class_exists('WooCommerce') and is_product_category() and ! is_product();
     }
 }
 
-if (!function_exists('show_woo_single_product')) {
+if (! function_exists('show_woo_single_product')) {
     /**
      * Returns the local WordPress template path.
      *
@@ -409,7 +416,7 @@ if (!function_exists('show_woo_single_product')) {
     }
 }
 
-if (!function_exists('get_the_logo')) {
+if (! function_exists('get_the_logo')) {
     /**
      * @param  bool  $include_link
      * @param  string  $custom_logo_css
@@ -428,7 +435,7 @@ if (!function_exists('get_the_logo')) {
     ) {
         $logo = wp_get_attachment_image(get_theme_mod('custom_logo'), $size, false, ['class' => $custom_logo_css]);
 
-        if (!$logo) {
+        if (! $logo) {
             return false;
         }
 
@@ -442,7 +449,7 @@ if (!function_exists('get_the_logo')) {
     }
 }
 
-if (!function_exists('get_the_logo_url')) {
+if (! function_exists('get_the_logo_url')) {
     /**
      * @param  string  $size
      *
@@ -454,7 +461,7 @@ if (!function_exists('get_the_logo_url')) {
     {
         $logo = wp_get_attachment_image_url(get_theme_mod('custom_logo'), $size, false);
 
-        if (!$logo) {
+        if (! $logo) {
             return false;
         }
 
@@ -462,7 +469,7 @@ if (!function_exists('get_the_logo_url')) {
     }
 }
 
-if (!function_exists('if_custom_logo')) {
+if (! function_exists('if_custom_logo')) {
     /**
      * @return bool
      *
@@ -472,7 +479,7 @@ if (!function_exists('if_custom_logo')) {
     {
         $logo = wp_get_attachment_image(get_theme_mod('custom_logo'), 'full');
 
-        if (!$logo) {
+        if (! $logo) {
             return false;
         }
 
@@ -480,7 +487,7 @@ if (!function_exists('if_custom_logo')) {
     }
 }
 
-if (!function_exists('word_count')) {
+if (! function_exists('word_count')) {
     function word_count()
     {
         global $post;
@@ -492,7 +499,7 @@ if (!function_exists('word_count')) {
     }
 }
 
-if (!function_exists('read_time')) {
+if (! function_exists('read_time')) {
     /**
      * @return float
      *
@@ -506,7 +513,7 @@ if (!function_exists('read_time')) {
     }
 }
 
-if (!function_exists('is_developer')) {
+if (! function_exists('is_developer')) {
     function is_developer()
     {
         if (is_user_logged_in()) {
@@ -519,7 +526,7 @@ if (!function_exists('is_developer')) {
     }
 }
 
-if (!function_exists('hide_adminbar_for_developers')) {
+if (! function_exists('hide_adminbar_for_developers')) {
     function hide_adminbar_for_developers()
     {
         if (is_developer()) {
@@ -528,7 +535,7 @@ if (!function_exists('hide_adminbar_for_developers')) {
     }
 }
 
-if (!function_exists('make_slug')) {
+if (! function_exists('make_slug')) {
     /**
      * @param $string
      *
@@ -545,7 +552,7 @@ if (!function_exists('make_slug')) {
     }
 }
 
-if (!function_exists('format_date')) {
+if (! function_exists('format_date')) {
     /**
      * @param $date
      * @param  bool  $format
@@ -555,7 +562,7 @@ if (!function_exists('format_date')) {
     function format_date($date, $format = false)
     {
         $timezone = get_option('timezone_string');
-        if (!$format) {
+        if (! $format) {
             return Carbon::parse($format, $timezone)->toFormattedDateString();
         }
 
@@ -566,7 +573,7 @@ if (!function_exists('format_date')) {
 /*
  * Helpers for working with ACF data objects
  */
-if (!function_exists('_get')) {
+if (! function_exists('_get')) {
     /**
      * @param $haystack
      * @param $needle
@@ -584,7 +591,7 @@ if (!function_exists('_get')) {
     }
 }
 
-if (!function_exists('_has')) {
+if (! function_exists('_has')) {
     /**
      * @param $haystack
      * @param $needle
@@ -602,7 +609,7 @@ if (!function_exists('_has')) {
     }
 }
 
-if (!function_exists('setBaseDataPath')) {
+if (! function_exists('setBaseDataPath')) {
     function setBaseDataPath()
     {
         /*
@@ -624,8 +631,7 @@ if (!function_exists('setBaseDataPath')) {
     }
 }
 
-if (!function_exists('getFeaturedImage')) {
-
+if (! function_exists('getFeaturedImage')) {
     /**
      * @param $post_id
      * @param $size
@@ -641,7 +647,7 @@ if (!function_exists('getFeaturedImage')) {
         $meta = get_post_meta($thumb_id);
 
         // If there's no image, then there's no post meta, return false.
-        if (!$meta && !$img) {
+        if (! $meta && ! $img) {
             return false;
         }
 
@@ -654,7 +660,7 @@ if (!function_exists('getFeaturedImage')) {
             'meta'       => $meta_attachment,
             'image_meta' => $meta_attachment['image_meta'],
             //'image_sizes' => $meta_attachment['sizes'],
-            'alt'        => $meta['_wp_attachment_image_alt'][0]
+            'alt'        => $meta['_wp_attachment_image_alt'][0],
         ];
     }
 }
